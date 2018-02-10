@@ -12,6 +12,9 @@ public class BlockCreator : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        if (false == _isCreate)
+            return;
+
         // 일정 주기로 블럭을 생성
         if(_createInterval <= _createDuration)
         {
@@ -34,5 +37,13 @@ public class BlockCreator : MonoBehaviour
         GameObject blockObject = GameObject.Instantiate(BlockPrefabs);
         blockObject.transform.position = transform.position;
         GameObject.Destroy(blockObject, 7.0f);
+    }
+
+
+    bool _isCreate = false;
+
+    public void StartCreate()
+    {
+        _isCreate = true;
     }
 }

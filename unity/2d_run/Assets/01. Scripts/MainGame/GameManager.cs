@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
     {
+        StartGame();
 	}
 	
 	// Update is called once per frame
@@ -31,9 +32,19 @@ public class GameManager : MonoBehaviour
 	}
 
 
+    // Game
+
+    void StartGame()
+    {
+        PlayerControllerScr.ChangeState(PlayerController.eState.RUN);
+        BlockCreatorScr.StartCreate();
+    }
+
+
     // Interface
 
     public PlayerController PlayerControllerScr;
+    public BlockCreator BlockCreatorScr;
 
     public PlayerController GetPlayer()
     {
