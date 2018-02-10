@@ -29,13 +29,28 @@ public class PlayerController : MonoBehaviour
         {
             case eState.IDLE:
                 // 아이들 애니메이션 : 애니메이터에 isGround 패러미터를 true 만들어 주면된다.
+                _velocity.x = 0.0f;
+                _velocity.y = 0.0f;
                 gameObject.GetComponent<Animator>().SetBool("isGround", true);
+                gameObject.GetComponent<Animator>().SetFloat("Horizontal", _velocity.x);
                 break;
             case eState.RUN:
                 // 달리기 애니메이션
+                _velocity.x = 5.0f;
+                _velocity.y = 0.0f;
                 gameObject.GetComponent<Animator>().SetBool("isGround", true);
-                gameObject.GetComponent<Animator>().SetFloat("Horizontal", 1.0f);
+                gameObject.GetComponent<Animator>().SetFloat("Horizontal", _velocity.x);
                 break;
         }
+    }
+
+
+    // Move
+
+    Vector2 _velocity = Vector2.zero;
+
+    public Vector2 GetVelocity()
+    {
+        return _velocity;
     }
 }
