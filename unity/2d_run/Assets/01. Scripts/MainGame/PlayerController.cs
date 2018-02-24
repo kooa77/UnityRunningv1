@@ -57,8 +57,10 @@ public class PlayerController : MonoBehaviour
         RUN,
     }
     eState _state = eState.IDLE;
+    //float _maxSpeed = 30.0f;
+    //float _addSpeed = 0.05f;
     float _maxSpeed = 15.0f;
-    float _addSpeed = 0.01f;
+    float _addSpeed = 0.05f;
 
     public void ChangeState(eState state)
     {
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
-
+        
 
     // Move
 
@@ -111,11 +113,16 @@ public class PlayerController : MonoBehaviour
     {
         //float jumpPower = 500.0f;
         //gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpPower);
-        float jumpSpeed = 10.0f;
+        float jumpSpeed = 30.0f;
         Vector2 velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
         velocity.y = jumpSpeed;
         gameObject.GetComponent<Rigidbody2D>().velocity = velocity;
 
         gameObject.GetComponent<Animator>().SetTrigger("Jump");
+    }
+
+    void ResetSpeed()
+    {
+        _velocity.x = 0.0f;
     }
 }

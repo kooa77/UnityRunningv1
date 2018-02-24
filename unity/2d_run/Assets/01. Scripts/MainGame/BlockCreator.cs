@@ -7,7 +7,7 @@ public class BlockCreator : MonoBehaviour
     // Use this for initialization
 	void Start ()
     {
-	}
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -15,28 +15,44 @@ public class BlockCreator : MonoBehaviour
         if (false == _isCreate)
             return;
 
-        // 일정 주기로 블럭을 생성
-        if(_createInterval <= _createDuration)
+        // 일정 거리로 블럭을 생성
+        float distance = transform.position.x - _lastBlockObject.transform.position.x;
+        //if(20 <= distance)
+        if (15 <= distance)
         {
-            _createDuration = 0.0f;
-            CreateBlock();
+            _lastBlockObject = CreateBlock();
         }
-        _createDuration += Time.deltaTime;
-
     }
 
     // Create
 
     public GameObject BlockPrefabs;
+    public GameObject VegetablePrefabs;
 
-    float _createInterval = 2.0f;
-    float _createDuration = 0.0f;
+    GameObject _lastBlockObject;
 
-    void CreateBlock()
+    GameObject CreateBlock()
     {
         GameObject blockObject = GameObject.Instantiate(BlockPrefabs);
         blockObject.transform.position = transform.position;
-        GameObject.Destroy(blockObject, 7.0f);
+
+        // 코인을 생성 -> 2층에 배치
+        GameObject vegetableObject = GameObject.Instantiate(VegetablePrefabs);
+        vegetableObject.transform.position = new Vector2(transform.position.x,
+                                                transform.position.y + 3.5f);
+
+        int randValue = Random.Range(0, 1000);
+        if(randValue < 300)
+        {
+            // 2층
+            blockObject.transform.position = new Vector2(blockObject.transform.position.x,
+                blockObject.transform.position.y + 3.5f);
+
+            // 코인을 1층 배치로 변경
+            vegetableObject.transform.position = transform.position;
+        }
+
+        return blockObject;
     }
 
 
@@ -45,5 +61,6 @@ public class BlockCreator : MonoBehaviour
     public void StartCreate()
     {
         _isCreate = true;
+        _lastBlockObject = CreateBlock();
     }
 }
