@@ -28,6 +28,7 @@ public class BlockCreator : MonoBehaviour
 
     public GameObject BlockPrefabs;
     public GameObject VegetablePrefabs;
+    public GameObject MeatPrefabs;
 
     GameObject _lastBlockObject;
 
@@ -36,20 +37,39 @@ public class BlockCreator : MonoBehaviour
         GameObject blockObject = GameObject.Instantiate(BlockPrefabs);
         blockObject.transform.position = transform.position;
 
+        GameObject coin01;
+        GameObject coin02;
+        int selectCoin = Random.Range(0, 1000);
+        if( selectCoin < 500 )
+        {
+            coin01 = GameObject.Instantiate(VegetablePrefabs);
+            coin02 = GameObject.Instantiate(MeatPrefabs);
+        }
+        else
+        {
+            coin01 = GameObject.Instantiate(MeatPrefabs);
+            coin02 = GameObject.Instantiate(VegetablePrefabs);
+        }
+
         // 코인을 생성 -> 2층에 배치
-        GameObject vegetableObject = GameObject.Instantiate(VegetablePrefabs);
-        vegetableObject.transform.position = new Vector2(transform.position.x,
+        coin01.transform.position = new Vector2(transform.position.x,
                                                 transform.position.y + 3.5f);
 
         int randValue = Random.Range(0, 1000);
-        if(randValue < 300)
+        if(randValue < 500)
         {
             // 2층
             blockObject.transform.position = new Vector2(blockObject.transform.position.x,
                 blockObject.transform.position.y + 3.5f);
 
             // 코인을 1층 배치로 변경
-            vegetableObject.transform.position = transform.position;
+            coin01.transform.position = transform.position;
+        }
+
+        // 3층
+        {
+            coin02.transform.position = new Vector2(transform.position.x,
+                                                    transform.position.y + 6.5f);
         }
 
         return blockObject;

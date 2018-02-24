@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
+    public float AddHP;
+    public float AddWeight;
+
     Vector2 _velocity = Vector2.zero;
 
     // Use this for initialization
@@ -32,7 +35,8 @@ public class Coin : MonoBehaviour
     {
         if ("Player" == collision.tag)
         {
-            //collision.gameObject.SendMessage("ResetSpeed");
+            collision.gameObject.SendMessage("IncreaseHP", AddHP);
+            collision.gameObject.SendMessage("AddWeight", AddWeight);
             GameObject.Destroy(gameObject);
         }
     }
